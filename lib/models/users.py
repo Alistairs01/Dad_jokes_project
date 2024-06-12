@@ -3,7 +3,7 @@ from models.__init__ import CONN, CURSOR
 
 
 class Users:
-    all = []
+    all = {}
     def __init__(self, username, email, id=None):
         self.username = username
         self.email = email
@@ -111,4 +111,50 @@ class Users:
             cls.all[user.id]= user
 
         return user
-    
+    @classmethod
+    def get_all(cls):
+        """Returns a list containing a user object for each row in the table"""
+        sql = """
+        SELECT * FROM users
+        """
+        CURSOR.execute(sql)
+        rows = CURSOR.fetchall()
+        return [cls.instance_from_db(row) for row in rows]
+
+    @classmethod
+    def find_by_id(cls, id):
+        """
+        Returns a user having the given id
+        """
+        sql = """
+        SELECT * FROM users
+        WHERE id = ?
+        """
+        CURSOR.execute(sql, (id,))
+        row = CURSOR.fetchone()
+        return cls.instance_from_db(row) if row else None
+
+    @classmethod
+    def find_by_username(cls, username):
+        """
+        Returns a user having the given username
+        """
+        sql = """
+        SELECT * FROM users
+        WHERE username = ?
+        """
+        CURSOR.execute(sql, (username,))
+        row = CURSOR.fetchone()
+        return cls.instance_from_db(row) if row else None
+    def jokes(self):
+        """
+        Returns a list of jokes created by the current user
+        """
+        from models.jokes import Jokes
+        sql = """
+        SELECT * FROM jokes
+        WHERE user_id = ?
+        """
+        CURSOR.execute(sql, (self.id,))
+        rows = CURSOR.fetchall()
+        return [Jokes.instance_from_db(row) for row in rows]
