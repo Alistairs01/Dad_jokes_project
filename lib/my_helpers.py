@@ -7,7 +7,7 @@ def exit_program():
 
 def find_user_by_name():
     name = input("Enter user name: ")
-    user = Users.find_by_name(name)
+    user = Users.find_by_username(name)
     print(f'User: {user}') if user else print ("User not found")
 def find_user_by_id():
     id_ = int(input("Enter user id: "))
@@ -27,8 +27,8 @@ def update_user():
         if user := Users.find_by_id(id):
             try:
 
-                name = input("Enter user name: ")
-                email = input("Enter user email: ")
+                name = str( input("Enter user name: "))
+                email = str(input("Enter user email: "))
                 user.name = name
                 user.email = email
                 user.update()
