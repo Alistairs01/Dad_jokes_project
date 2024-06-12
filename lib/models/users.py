@@ -130,8 +130,7 @@ class Users:
         SELECT * FROM users
         WHERE id = ?
         """
-        CURSOR.execute(sql, (id,))
-        row = CURSOR.fetchone()
+        row = CURSOR.execute(sql, (id,)).fetchone()
         return cls.instance_from_db(row) if row else None
 
     @classmethod

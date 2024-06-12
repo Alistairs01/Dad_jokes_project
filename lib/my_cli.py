@@ -1,3 +1,5 @@
+#!/usr/bin/env python3 
+
 import fire
 from my_helpers import (
     create_user,
@@ -12,25 +14,16 @@ from my_helpers import (
     update_joke,
     delete_user,
     delete_joke,
-    exit
+    exit_program
 )
+
 def main():
     while True:
-        print("1. Create user")
-        print("2. Create joke")
-        print("3. Find user by id")
-        print("4. Find user by name")
-        print("5. Find joke by id")
-        print("6. Find joke by joke")
-        print("7. List users")
-        print("8. List jokes")
-        print("9. Update user")
-        print("10. Update joke")
-        print("11. Delete user")
-        print("12. Delete joke")
-        print("13. Exit")
+        menu()
         choice = input("Enter your choice: ")
-        if choice == "1":
+        if choice == "0":
+            exit_program()
+        elif choice == "1":
             create_user()
         elif choice == "2":
             create_joke()
@@ -54,11 +47,24 @@ def main():
             delete_user()
         elif choice == "12":
             delete_joke()
-        elif choice == "13":
-            exit()
         else:
             print("Invalid choice")
 
-    if__name__ == "__main__"
-fire.Fire(main)
+def menu():
+    print("0. Exit")
+    print("1. Create user")
+    print("2. Create joke")
+    print("3. Find user by id")
+    print("4. Find user by name")
+    print("5. Find joke by id")
+    print("6. Find joke by joke")
+    print("7. List users")
+    print("8. List jokes")
+    print("9. Update user")
+    print("10. Update joke")
+    print("11. Delete user")
+    print("12. Delete joke")
     
+
+if __name__ == "__main__":
+    main()

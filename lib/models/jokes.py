@@ -4,15 +4,15 @@ from models.users import Users
 class Jokes:
     all = {}
 
-    def __init__(self, user_id, joke, id=None):
+    def __init__(self, joke, id=None, user_id = None):
         self.user_id = user_id
         self.joke = joke
         self.id = id
 
     def __repr__(self):
         return (
-            f"<Jokes {self.user_id} {self.joke} {self.id}>"
-            f"<{self.user}>"
+            f"<Jokes {self.joke} {self.id}>"
+
         )
 
     @property
@@ -24,7 +24,7 @@ class Jokes:
         if isinstance(joke, str) and len(joke):
             self._joke = joke
         else:
-            print("Joke must be a non-empty string")
+            raise ValueError("Joke must be a non-empty string")
 
     @property
     def user_id(self):
@@ -100,7 +100,7 @@ class Jokes:
         """
         Creates a new joke and saves it to the database
         """
-        joke = Jokes(user_id, joke)
+        joke = cls(user_id, joke)
         joke.save()
         return joke
 

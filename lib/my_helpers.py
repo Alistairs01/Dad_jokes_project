@@ -1,17 +1,17 @@
 from models.users import Users
 from models.jokes import Jokes
 
-def exit():
+def exit_program():
     print("Bye!")
-    exit()  
+    exit()
 
-def find_user_by_name(name):
+def find_user_by_name():
     name = input("Enter user name: ")
     user = Users.find_by_name(name)
     print(f'User: {user}') if user else print ("User not found")
-def find_user_by_id(id):
-    id = input("Enter user id: ")
-    user = Users.find_by_id(id)
+def find_user_by_id():
+    id_ = int(input("Enter user id: "))
+    user = Users.find_by_id(id_)
     print(user) if user else print ("User not found")
 def create_user():
     name = input("Enter user name: ")
@@ -22,7 +22,7 @@ def create_user():
     except Exception as e:
         print(f'User not created: {e}')
 
-    def update_user():
+def update_user():
         id = input("Enter user id: ")
         if user := Users.find_by_id(id):
             try:
@@ -38,7 +38,7 @@ def create_user():
         else:
             print("User not found")
 
-    def delete_user():
+def delete_user():
         id = input("Enter user id: ")
         if user := Users.find_by_id(id):
             user.delete()
@@ -46,25 +46,25 @@ def create_user():
         else:
             print("User not found")
 
-    def list_users():
+def list_users():
         for user in Users.get_all():
             print(user)
 
-    def list_jokes():
+def list_jokes():
         for joke in Jokes.get_all():
             print(joke)
 
-    def find_joke_by_id(id):
+def find_joke_by_id():
         id = input("Enter joke id: ")
         joke = Jokes.find_by_id(id)
         print(joke) if joke else print ("Joke not found")
 
-    def find_joke_by_joke(joke):
+def find_joke_by_joke():
         joke = input("Enter joke: ")
         joke = Jokes.find_by_joke(joke)
         print(joke) if joke else print ("Joke not found")
 
-    def create_joke():
+def create_joke():
         user_id = input("Enter user id: ")
         joke = input("Enter joke: ")
         try:
@@ -73,7 +73,7 @@ def create_user():
         except Exception as e:
             print(f'Joke not created: {e}')
 
-    def update_joke():
+def update_joke():
         id = input("Enter joke id: ")
         if joke := Jokes.find_by_id(id):
             try:
@@ -86,7 +86,7 @@ def create_user():
         else:
             print("Joke not found")
 
-    def delete_joke():
+def delete_joke():
         id = input("Enter joke id: ")
         if joke := Jokes.find_by_id(id):
             joke.delete()
