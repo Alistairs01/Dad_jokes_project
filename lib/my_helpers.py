@@ -82,7 +82,7 @@ def find_joke_by_id():
 
 def find_joke_by_joke():
     joke_text = input("Enter joke: ")
-    joke = Jokes.find_by_joke(joke_text)
+    joke = Jokes.find_by_joke_text(joke_text)
     print(f'Joke: {joke}' if joke else "Joke not found")
 
 def create_joke():

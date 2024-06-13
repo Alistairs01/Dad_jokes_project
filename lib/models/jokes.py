@@ -31,7 +31,7 @@ class Jokes:
 
     @user_id.setter
     def user_id(self, user_id):
-        if isinstance(user_id, int) and Users.find_by_id(user_id):
+        if isinstance(user_id, int):
             self._user_id = user_id
         else:
             print(f"Invalid user id: {user_id}")
@@ -145,4 +145,15 @@ class Jokes:
         row = CURSOR.fetchone()
         return cls.instance_from_db(row) if row else None
 
-   
+    @classmethod
+    def find_by_joke_text(cls,joke_text):
+        """
+        Returns a joke having the given joke text
+        """
+        sql = """
+        SELECT * FROM jokes
+        WHERE joke = ?
+        """
+        CURSOR.execute(sql, (joke_text,))
+        row = CURSOR.fetchone()
+        return cls.instance_from_db(row) if row else None
