@@ -1,5 +1,5 @@
-from models.users import Users
 from models.jokes import Jokes
+from models.users import Users
 
 def exit_program():
     print("Bye!")
@@ -33,9 +33,9 @@ def update_user():
         user = Users.find_by_id(id_)
         if user:
             try:
-                name = input("Enter user name: ")
-                email = input("Enter user email: ")
-                user.name = name
+                name = input("Enter user's new name: ")
+                email = input("Enter user's new email: ")
+                user.username = name
                 user.email = email
                 user.update()
                 print(f'User updated: {user}')
@@ -60,11 +60,15 @@ def delete_user():
 
 def list_users():
     users = Users.get_all()
+    if not users:
+        print("No users found.")
     for user in users:
         print(user)
 
 def list_jokes():
     jokes = Jokes.get_all()
+    if not jokes:
+        print("No jokes found.")
     for joke in jokes:
         print(joke)
 
@@ -104,14 +108,15 @@ def create_joke():
             print(f'Joke not created: {e}')
     except ValueError:
         print("Invalid input. Please enter a valid user id.")
+
 def update_joke():
     try:
         id_ = int(input("Enter joke id: "))
         joke = Jokes.find_by_id(id_)
         if joke:
             try:
-                user_id = int(input("Enter user id: "))
-                joke.user_id = user_id
+                joke_text = input("Enter joke: ").strip()
+                joke.joke = joke_text
                 joke.update()
                 print(f'Joke updated: {joke}')
             except Exception as e:

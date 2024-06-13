@@ -1,19 +1,18 @@
+# lib/models/jokes.py
+
 from models.__init__ import CONN, CURSOR
 from models.users import Users
 
 class Jokes:
     all = {}
 
-    def __init__(self, joke, id=None, user_id = None):
+    def __init__(self, joke, id=None, user_id=None):
         self.user_id = user_id
         self.joke = joke
         self.id = id
 
     def __repr__(self):
-        return (
-            f"<Jokes {self.joke} {self.id}>"
-
-        )
+        return f"<Jokes {self.joke} {self.id}>"
 
     @property
     def joke(self):
@@ -32,10 +31,10 @@ class Jokes:
 
     @user_id.setter
     def user_id(self, user_id):
-        if type(user_id) is int and Users.find_by_id(user_id):
+        if isinstance(user_id, int) and Users.find_by_id(user_id):
             self._user_id = user_id
         else:
-            print("Invalid user id")
+            print(f"Invalid user id: {user_id}")
 
     @classmethod
     def create_table(cls):
@@ -43,10 +42,9 @@ class Jokes:
         sql = """
         CREATE TABLE IF NOT EXISTS jokes (
             id INTEGER PRIMARY KEY,
-             joke TEXT,
+            joke TEXT,
             user_id INTEGER,
             FOREIGN KEY(user_id) REFERENCES users(id)
-           
         )
         """
         CURSOR.execute(sql)
@@ -61,7 +59,7 @@ class Jokes:
         CURSOR.execute(sql)
         CONN.commit()
 
-    def  save(self):
+    def save(self):
         """
         Saves the Jokes instance to the database
         """
@@ -72,17 +70,19 @@ class Jokes:
         CONN.commit()
         self.id = CURSOR.lastrowid
         type(self).all[self.id] = self
+
     def update(self):
         """
         Updates the table row corresponding to the current joke
         """
         sql = """
         UPDATE jokes
-        SET joke = ?
+        SET joke = ?, user_id = ?
         WHERE id = ?
         """
-        CURSOR.execute(sql, (self.joke, self.id))
+        CURSOR.execute(sql, (self.joke, self.user_id, self.id))
         CONN.commit()
+
     def delete(self):
         """
         Deletes the table row corresponding to the current joke
@@ -95,31 +95,30 @@ class Jokes:
         CONN.commit()
         del type(self).all[self.id]
         self.id = None
+
     @classmethod
     def create(cls, user_id, joke):
         """
         Creates a new joke and saves it to the database
         """
-        joke = cls(user_id, joke)
+        joke = cls(joke, user_id=user_id)
         joke.save()
         return joke
 
     @classmethod
     def instance_from_db(cls, row):
-        """"
+        """
         Returns a joke having the attribute values from the table row
         """
         joke = cls.all.get(row[0])
-
         if joke:
             joke.joke = row[1]
             joke.user_id = row[2]
         else:
-            joke = cls(row[1], row[2])
-            joke.id = row[0]
+            joke = cls(row[1], row[0], row[2])
             cls.all[joke.id] = joke
-
         return joke
+
     @classmethod
     def get_all(cls):
         """
@@ -130,7 +129,9 @@ class Jokes:
         """
         CURSOR.execute(sql)
         rows = CURSOR.fetchall()
+          # Debugging output
         return [cls.instance_from_db(row) for row in rows]
+
     @classmethod
     def find_by_id(cls, id):
         """
@@ -143,16 +144,5 @@ class Jokes:
         CURSOR.execute(sql, (id,))
         row = CURSOR.fetchone()
         return cls.instance_from_db(row) if row else None
-    @classmethod
-    def find_by_user_id(cls, user_id):
-        """
-        Returns a list of jokes created by the given user
-        """
-        sql = """
-        SELECT * FROM jokes
-        WHERE user_id = ?
-        """
-        CURSOR.execute(sql, (user_id,))
-        rows = CURSOR.fetchall()
-        return [cls.instance_from_db(row) for row in rows]
-    
+
+   

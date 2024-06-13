@@ -1,18 +1,22 @@
-#lib/models/users.py
-from models.__init__ import CONN, CURSOR
+# lib/models/users.py
 
+from models.__init__ import CONN, CURSOR
 
 class Users:
     all = {}
+
     def __init__(self, username, email, id=None):
         self.username = username
         self.email = email
         self.id = id
-    def  __repr__(self):
+
+    def __repr__(self):
         return f"<Users {self.username} {self.email} {self.id}>"
+
     @property
     def name(self):
         return self.username
+
     @name.setter
     def name(self, name):
         if isinstance(name, str) and len(name):
@@ -23,7 +27,7 @@ class Users:
     @property
     def email(self):
         return self._email
-    
+
     @email.setter
     def email(self, email):
         if isinstance(email, str) and len(email):
@@ -34,7 +38,8 @@ class Users:
     @classmethod
     def create_table(cls):
         """
-        Creates the table if it doesn't exist"""
+        Creates the table if it doesn't exist
+        """
         sql = """
         CREATE TABLE IF NOT EXISTS users (
             id INTEGER PRIMARY KEY,
@@ -48,13 +53,14 @@ class Users:
     @classmethod
     def drop_table(cls):
         """
-        Drops the table if it exists"""
+        Drops the table if it exists
+        """
         sql = """
         DROP TABLE IF EXISTS users
         """
         CURSOR.execute(sql)
         CONN.commit()
-        
+
     def save(self):
         sql = """
         INSERT INTO users (username, email) VALUES (?, ?)
@@ -72,6 +78,7 @@ class Users:
         user = cls(username, email)
         user.save()
         return user
+
     def update(self):
         """
         Updates the table row corresponding to the current user
@@ -83,6 +90,7 @@ class Users:
         """
         CURSOR.execute(sql, (self.username, self.email, self.id))
         CONN.commit()
+
     def delete(self):
         """
         Deletes the table row corresponding to the current user
@@ -99,7 +107,8 @@ class Users:
     @classmethod
     def instance_from_db(cls, row):
         """
-        Returns a user having the attribute values from the table row"""
+        Returns a user having the attribute values from the table row
+        """
         user = cls.all.get(row[0])
 
         if user:
@@ -108,12 +117,15 @@ class Users:
         else:
             user = cls(row[1], row[2])
             user.id = row[0]
-            cls.all[user.id]= user
+            cls.all[user.id] = user
 
         return user
+
     @classmethod
     def get_all(cls):
-        """Returns a list containing a user object for each row in the table"""
+        """
+        Returns a list containing a user object for each row in the table
+        """
         sql = """
         SELECT * FROM users
         """
@@ -145,6 +157,7 @@ class Users:
         CURSOR.execute(sql, (username,))
         row = CURSOR.fetchone()
         return cls.instance_from_db(row) if row else None
+
     def jokes(self):
         """
         Returns a list of jokes created by the current user

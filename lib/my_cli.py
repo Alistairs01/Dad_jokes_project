@@ -1,6 +1,5 @@
-#!/usr/bin/env python3 
+#!/usr/bin/env python3
 
-import fire
 from my_helpers import (
     create_user,
     create_joke,
@@ -19,8 +18,33 @@ from my_helpers import (
 
 def main():
     while True:
-        menu()
+        display_menu()
         choice = input("Enter your choice: ")
+        handle_choice(choice)
+
+def display_menu():
+    """
+    Displays the menu options to the user.
+    """
+    print("0. Exit")
+    print("1. Create user")
+    print("2. Create joke")
+    print("3. Find user by id")
+    print("4. Find user by name")
+    print("5. Find joke by id")
+    print("6. Find joke by joke text")
+    print("7. List users")
+    print("8. List jokes")
+    print("9. Update user")
+    print("10. Update joke")
+    print("11. Delete user")
+    print("12. Delete joke")
+
+def handle_choice(choice):
+    """
+    Handles the user's menu choice and invokes the corresponding function.
+    """
+    try:
         if choice == "0":
             exit_program()
         elif choice == "1":
@@ -48,23 +72,9 @@ def main():
         elif choice == "12":
             delete_joke()
         else:
-            print("Invalid choice")
-
-def menu():
-    print("0. Exit")
-    print("1. Create user")
-    print("2. Create joke")
-    print("3. Find user by id")
-    print("4. Find user by name")
-    print("5. Find joke by id")
-    print("6. Find joke by joke")
-    print("7. List users")
-    print("8. List jokes")
-    print("9. Update user")
-    print("10. Update joke")
-    print("11. Delete user")
-    print("12. Delete joke")
-    
+            print("Invalid choice. Please enter a number between 0 and 12.")
+    except Exception as e:
+        print(f"An error occurred while processing your request: {e}")
 
 if __name__ == "__main__":
     main()
