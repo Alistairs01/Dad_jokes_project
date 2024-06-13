@@ -26,19 +26,20 @@ def display_menu():
     """
     Displays the menu options to the user.
     """
-    print("0. Exit")
-    print("1. Create user")
-    print("2. Create joke")
-    print("3. Find user by id")
-    print("4. Find user by name")
-    print("5. Find joke by id")
-    print("6. Find joke by joke text")
-    print("7. List users")
-    print("8. List jokes")
-    print("9. Update user")
-    print("10. Update joke")
-    print("11. Delete user")
-    print("12. Delete joke")
+    print("Menu:📜")
+    print("0. Exit🚪")
+    print("1. Create user👤")
+    print("2. Create joke 😂")
+    print("3. Find user by id 🔍")
+    print("4. Find user by name 🔍")
+    print("5. Find joke by id 🔍")
+    print("6. Find joke by joke text 🔍")
+    print("7. List users📋")
+    print("8. List jokes📋")
+    print("9. Update user✏️")
+    print("10. Update joke✏️")
+    print("11. Delete user❌")
+    print("12. Delete joke❌")
 
 def handle_choice(choice):
     """

@@ -2,30 +2,30 @@ from models.jokes import Jokes
 from models.users import Users
 
 def exit_program():
-    print("Bye!")
+    print("👋Bye!")
     exit()
 
 def find_user_by_name():
     name = input("Enter user name: ")
     user = Users.find_by_username(name)
-    print(f'User: {user}' if user else "User not found")
+    print(f'✅User: {user}' if user else "User not found❌")
 
 def find_user_by_id():
     try:
         id_ = int(input("Enter user id: "))
         user = Users.find_by_id(id_)
-        print(f'User: {user}' if user else "User not found")
+        print(f'✅User: {user}' if user else "User not found❌")
     except ValueError:
-        print("Invalid input. Please enter a valid user id.")
+        print("Invalid input. Please enter a valid user id.❌")
 
 def create_user():
     name = str(input("Enter user name: "))
     email = str(input("Enter user email: "))
     try:
         user = Users.create(name, email)
-        print(f'User created: {user}')
+        print(f'✅User created: {user}')
     except Exception as e:
-        print(f'User not created: {e}')
+        print(f'❌User not created: {e}')
 
 def update_user():
     try:
@@ -38,13 +38,13 @@ def update_user():
                 user.username = name
                 user.email = email
                 user.update()
-                print(f'User updated: {user}')
+                print(f'✅User updated: {user}')
             except Exception as e:
-                print(f'User not updated: {e}')
+                print(f'❌User not updated: {e}')
         else:
             print("User not found")
     except ValueError:
-        print("Invalid input. Please enter a valid user id.")
+        print("Invalid input. Please enter a valid user id.❌")
 
 def delete_user():
     try:
@@ -52,23 +52,23 @@ def delete_user():
         user = Users.find_by_id(id_)
         if user:
             user.delete()
-            print(f'User deleted: {user}')
+            print(f'✅User deleted: {user}')
         else:
             print("User not found")
     except ValueError:
-        print("Invalid input. Please enter a valid user id.")
+        print("Invalid input. Please enter a valid user id.❌")
 
 def list_users():
     users = Users.get_all()
     if not users:
-        print("No users found.")
+        print("No users found.❌")
     for user in users:
         print(user)
 
 def list_jokes():
     jokes = Jokes.get_all()
     if not jokes:
-        print("No jokes found.")
+        print("No jokes found.❌")
     for joke in jokes:
         print(joke)
 
@@ -76,14 +76,14 @@ def find_joke_by_id():
     try:
         id_ = int(input("Enter joke id: "))
         joke = Jokes.find_by_id(id_)
-        print(f'Joke: {joke}' if joke else "Joke not found")
+        print(f'✅Joke: {joke}' if joke else "Joke not found❌")
     except ValueError:
-        print("Invalid input. Please enter a valid joke id.")
+        print("Invalid input. Please enter a valid joke id.❌")
 
 def find_joke_by_joke():
     joke_text = input("Enter joke: ")
     joke = Jokes.find_by_joke_text(joke_text)
-    print(f'Joke: {joke}' if joke else "Joke not found")
+    print(f'✅Joke: {joke}' if joke else "Joke not found❌")
 
 def create_joke():
     try:
@@ -93,21 +93,21 @@ def create_joke():
         # Validate user ID
         user = Users.find_by_id(user_id)
         if not user:
-            print("Invalid user id.")
+            print("Invalid user id.❌")
             return
 
         # Validate joke text
         if not joke_text:
-            print("Joke must be a non-empty string.")
+            print("Joke must be a non-empty string.❌")
             return
 
         try:
             joke = Jokes.create(user_id, joke_text)
-            print(f'Joke created: {joke}')
+            print(f'✅Joke created: {joke}')
         except Exception as e:
             print(f'Joke not created: {e}')
     except ValueError:
-        print("Invalid input. Please enter a valid user id.")
+        print("Invalid input. Please enter a valid user id.❌")
 
 def update_joke():
     try:
@@ -118,13 +118,13 @@ def update_joke():
                 joke_text = input("Enter joke: ").strip()
                 joke.joke = joke_text
                 joke.update()
-                print(f'Joke updated: {joke}')
+                print(f'✅Joke updated: {joke}')
             except Exception as e:
-                print(f'Joke not updated: {e}')
+                print(f'Joke not updated: {e}❌')
         else:
-            print("Joke not found")
+            print("Joke not found❌")
     except ValueError:
-        print("Invalid input. Please enter a valid joke id.")
+        print("Invalid input. Please enter a valid joke id.❌")
 
 def delete_joke():
     try:
@@ -132,8 +132,8 @@ def delete_joke():
         joke = Jokes.find_by_id(id_)
         if joke:
             joke.delete()
-            print(f'Joke deleted: {joke}')
+            print(f'✅Joke deleted: {joke}')
         else:
-            print("Joke not found")
+            print("Joke not found❌")
     except ValueError:
-        print("Invalid input. Please enter a valid joke id.")
+        print("Invalid input. Please enter a valid joke id.❌")
