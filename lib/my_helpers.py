@@ -19,8 +19,8 @@ def find_user_by_id():
         print("Invalid input. Please enter a valid user id.")
 
 def create_user():
-    name = input("Enter user name: ")
-    email = input("Enter user email: ")
+    name = str(input("Enter user name: "))
+    email = str(input("Enter user email: "))
     try:
         user = Users.create(name, email)
         print(f'User created: {user}')

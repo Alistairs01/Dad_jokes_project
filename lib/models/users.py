@@ -19,7 +19,7 @@ class Users:
 
     @name.setter
     def name(self, name):
-        if isinstance(name, str) and len(name):
+        if isinstance(name, str) and len(name) > 0:
             self._name = name
         else:
             print("Name must be a non-empty string")
