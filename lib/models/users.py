@@ -1,5 +1,5 @@
 # lib/models/users.py
-
+import re
 from models.__init__ import CONN, CURSOR
 
 class Users:
@@ -19,10 +19,13 @@ class Users:
 
     @name.setter
     def name(self, name):
-        if isinstance(name, str) and len(name) > 0:
+        pattern = re.compile(r'^[a-zA-Z]+$')
+    
+        if pattern.match(name) and len(name) > 0:
             self._name = name
         else:
-            print("Name must be a non-empty string")
+      
+         print("Name must be a non-empty string")
 
     @property
     def email(self):
