@@ -52,11 +52,12 @@ def delete_user():
         user = Users.find_by_id(id_)
         if user:
             user.delete()
-            print(f'✅User deleted: {user}')
+            print(f'✅ User deleted: {user}')
         else:
-            print("User not found")
+            print("❌ User not found")
     except ValueError:
-        print("Invalid input. Please enter a valid user id.❌")
+        print("❌ Invalid input. Please enter a valid user id.")
+
 
 def list_users():
     users = Users.get_all()
